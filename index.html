@@ -267,7 +267,7 @@
             document.getElementById("game").innerHTML = `
                 <button class="category-btn" onclick="start('kboy')">🇰🇷 男团（建设中）</button>
                 <button class="category-btn" onclick="start('kgirl')">🇰🇷 女团（建设中）</button>
-                <button class="category-btn" onclick="start('tf')">🧒 TF家族</button>
+                <button class="category-btn" onclick="start('tf')">🧒 TF（2-4代）</button>
             `;
             document.getElementById("score").innerText = "";
         }
@@ -314,7 +314,6 @@
             <img src="${q.img}" alt="人物">
             <input type="text" id="input" placeholder="请输入名字" autocomplete="off">
             <button onclick="check()">提交答案</button>
-            <button class="back-btn" onclick="showMenu()">返回选择</button>
             <div id="tip" class="result"></div>
             <div id="showAnswer" class="answer"></div>
             `;
