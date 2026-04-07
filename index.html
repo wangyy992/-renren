@@ -170,20 +170,11 @@
     <div class="score" id="score"></div>
 
     <script>
-        // ==============================================
-        // 你可以无限加人！每个分类放几百个都没问题
-        // 系统会自动随机抽 20 个
-        // ==============================================
         const database = {
-            // 韩国男团（随便加多少）
             kboy: [
                 { img: "images/kboy1.jpg", ans: "答案1" },
-                { img: "images/kboy2.jpg", ans: "答案2" },
-                { img: "images/kboy3.jpg", ans: "答案3" },
-                // 继续加...
             ],
 
-            // 韩国女团（随便加多少）
             kgirl: [
                 { img: "李贤瑞.jpg", ans: ["李贤瑞","李瑞","Leeseo","LeeHyunSeo"] },
                 { img: "liz.jpg", ans: ["金志垣","Liz","KimJiWon"] },
@@ -211,7 +202,7 @@
                 
                 { img: "Soyeon.jpg", ans: ["田小娟", "Soyeon", "JeonSoYeon"] },
                 { img: "Miyeon.jpg", ans: ["赵美延", "Miyeon", "ChoMiYeon"] },
-                { img: "Minnie.jpg", ans: ["米妮", "妮查"，"金米妮","Minnie", "NichaYontararak"] },
+                { img: "Minnie.jpg", ans: ["米妮", "妮查","金米妮","Minnie", "NichaYontararak"] },
                 { img: "Yuqi.jpg", ans: ["宋雨琦", "Yuqi", "SongYuQi"] },
                 { img: "Shuhua.jpg", ans: ["叶舒华", "Shuhua", "YeShuHua"] },
                 
@@ -242,9 +233,8 @@
                 { img: "ChaeYeon.jpg", ans: ["李彩演", "Chaeyeon", "LeeChaeYeon"] },
                 { img: "Yuri.jpg", ans: ["曺柔理", "Yuri", "JoYuRi"] },
                 { img: "MinJu.jpg", ans: ["金玟周", "Minju", "KimMinJu"] },
-                { img: "HyeWon.jpg", ans: ["姜惠元", "HyeWon", "KangHyeWon"] }
+                { img: "HyeWon.jpg", ans: ["姜惠元", "HyeWon", "KangHyeWon"] },
 
-                
                 { img: "BMAsa.jpg", ans: ["ASA", "Asa"] },
                 { img: "BMRami.jpg", ans: ["Rami", "Rami"] },
                 { img: "BMPharita.jpg", ans: ["Pharita", "Pharita"] },
@@ -263,10 +253,8 @@
                 { img: "MEOVV.jpg", ans: ["MEOVV", "미야오브"] },
                 { img: "H2H.jpg", ans: ["Hearts2Hearts", "H2H"] },
                 { img: "KIIKIII.jpg", ans: ["KIIKIII", "키키키"] },
-                // 继续加...
             ],
 
-            // TF家族（你原来的）
             tf: [
                 { img: "images/官俊臣.jpg", ans: "官俊臣" },
                 { img: "images/左奇函.jpg", ans: "左奇函" },
@@ -290,13 +278,11 @@
                 { img: "images/张真源.jpg", ans: "张真源" },
                 { img: "images/严浩翔.jpg", ans: "严浩翔" },
                 { img: "images/贺峻霖.jpg", ans: "贺峻霖" },
-                
                 { img: "images/李天泽.jpg", ans: "李天泽" },
                 { img: "images/陈泗旭.jpg", ans: "陈泗旭" },
                 { img: "images/陈玺达.jpg", ans: "陈玺达" },
                 { img: "images/敖子逸.jpg", ans: "敖子逸" },
                 { img: "images/宋文嘉.jpg", ans: "宋文嘉" },
-
                 { img: "images/朱志鑫.jpg", ans: "朱志鑫" },
                 { img: "images/张泽禹.jpg", ans: "张泽禹" },
                 { img: "images/张极.jpg", ans: "张极" },
@@ -310,18 +296,14 @@
                 { img: "images/邓佳鑫.jpg", ans: "邓佳鑫" },
                 { img: "images/黄朔.jpg", ans: "黄朔" },
                 { img: "images/张子墨.jpg", ans: "张子墨" },
-                // 继续加...
             ]
         };
 
-        // 配置：每次随机抽 20 题
         const PLAY_COUNT = 20;
-
         let currentQuestions = [];
         let current = 0;
         let correct = 0;
 
-        // 打乱数组
         function shuffle(arr) {
             let newArr = [...arr];
             for (let i = newArr.length - 1; i > 0; i--) {
@@ -331,23 +313,20 @@
             return newArr;
         }
 
-        // 随机抽取 N 个不重复题目
         function getRandomQuestions(arr, count) {
             const shuffled = shuffle(arr);
             return shuffled.slice(0, Math.min(count, arr.length));
         }
 
-        // 首页菜单
         function showMenu() {
             document.getElementById("game").innerHTML = `
                 <button class="category-btn" onclick="start('kboy')">🇰🇷 男团（建设中）</button>
-                <button class="category-btn" onclick="start('kgirl')">🇰🇷 女团（建设中）</button>
+                <button class="category-btn" onclick="start('kgirl')">🇰🇷 女团</button>
                 <button class="category-btn" onclick="start('tf')">🧒 TF（2-4代）</button>
             `;
             document.getElementById("score").innerText = "";
         }
 
-        // 开始游戏
         function start(category) {
             const all = database[category];
             currentQuestions = getRandomQuestions(all, PLAY_COUNT);
@@ -356,19 +335,13 @@
             render();
         }
 
-        // 渲染题目
         function render() {
             if (current >= currentQuestions.length) {
                 const rate = ((correct / currentQuestions.length) * 100).toFixed(1);
                 let comment = "";
-
-                if (rate < 50) {
-                    comment = "额";
-                } else if (rate < 90) {
-                    comment = "还不错";
-                } else {
-                    comment = "牛坤牛坤";
-                }
+                if (rate < 50) comment = "额";
+                else if (rate < 90) comment = "还不错";
+                else comment = "牛坤牛坤";
 
                 document.getElementById("game").innerHTML = `
                 <div class="finish-box">
@@ -392,21 +365,26 @@
             <div id="tip" class="result"></div>
             <div id="showAnswer" class="answer"></div>
             `;
-
             document.getElementById("score").innerText = `📝 进度：${current + 1}/${currentQuestions.length}`;
         }
 
-        // 检查答案
+        // 检查答案（已修复：支持多答案 + 大小写通用）
         function check() {
-            const user = document.getElementById("input").value.trim();
+            const user = document.getElementById("input").value.trim().toLowerCase();
             const ans = currentQuestions[current].ans;
-            const isCorrect = Array.isArray(ans)
-              ? ans.some(item => item.trim().toLowerCase() === user.trim().toLowerCase())
-              : ans.trim() === user;
             const tip = document.getElementById("tip");
             const showAns = document.getElementById("showAnswer");
 
-            if (user === ans) {
+            let isCorrect = false;
+            let realAns = Array.isArray(ans) ? ans[0] : ans;
+
+            if (Array.isArray(ans)) {
+                isCorrect = ans.some(item => item.trim().toLowerCase() === user);
+            } else {
+                isCorrect = ans.trim().toLowerCase() === user;
+            }
+
+            if (isCorrect) {
                 tip.className = "result correct";
                 tip.innerText = "✅ 回答正确！";
                 showAns.innerText = "";
@@ -414,7 +392,7 @@
             } else {
                 tip.className = "result wrong";
                 tip.innerText = "❌ 回答错误";
-                showAns.innerText = "正确答案：" + ans;
+                showAns.innerText = "正确答案：" + realAns;
             }
 
             setTimeout(() => {
@@ -423,9 +401,7 @@
             }, 1500);
         }
 
-        // 启动
         showMenu();
     </script>
 </body>
 </html>
-        
